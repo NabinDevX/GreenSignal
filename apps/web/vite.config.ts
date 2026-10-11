@@ -4,7 +4,10 @@ import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 
 export default defineConfig(({ mode }) => {
-  const workspaceRoot = resolve(fileURLToPath(new URL(".", import.meta.url)), "../..");
+  const workspaceRoot = resolve(
+    fileURLToPath(new URL(".", import.meta.url)),
+    "../.."
+  );
   const env = loadEnv(mode, workspaceRoot, "");
 
   return {
@@ -16,10 +19,10 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
       proxy: {
         "/api": {
-          target: env.VITE_API_PROXY_BASE_URL || "http://localhost:3001",
-          changeOrigin: true,
-        },
-      },
-    },
+          target: env.VITE_API_BASE_URL || "http://localhost:3001",
+          changeOrigin: true
+        }
+      }
+    }
   };
 });
