@@ -3,7 +3,7 @@ FROM oven/bun:1.3.3
 WORKDIR /app
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends ca-certificates curl \
+  && apt-get install -y --no-install-recommends ca-certificates curl zstd \
   && curl -fsSL https://ollama.com/install.sh | sh \
   && rm -rf /var/lib/apt/lists/*
 
