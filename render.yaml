@@ -3,6 +3,7 @@ services:
     name: groundsignal-api
     runtime: docker
     plan: free
+    rootDir: .
     dockerfilePath: ./apps/api/Dockerfile
     dockerContext: .
     healthCheckPath: /api/health
