@@ -5,6 +5,14 @@ set -eu
 : "${OLLAMA_HOST:=127.0.0.1:11434}"
 : "${MODEL_RUNNER_BASE_URL:=http://127.0.0.1:11434/v1}"
 
+case "$MODEL_NAME" in
+  docker.io/ai/*)
+    docker_model_name="$MODEL_NAME"
+    MODEL_NAME=smollm2:135m
+    echo "[GroundSignal] Ignoring Docker Model Runner model ${docker_model_name}; using ${MODEL_NAME} for Ollama"
+    ;;
+esac
+
 export OLLAMA_HOST
 
 echo "[GroundSignal] Starting Ollama on ${OLLAMA_HOST}"
