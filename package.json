@@ -1,0 +1,21 @@
+{
+  "name": "groundsignal-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "dev:all": "bun run dev",
+    "build": "bun run --filter '@groundsignal/shared' build && bun run --filter '@groundsignal/api' build && bun run --filter '@groundsignal/web' build",
+    "lint": "bun run --filter '@groundsignal/shared' lint && bun run --filter '@groundsignal/api' lint && bun run --filter '@groundsignal/web' lint",
+    "typecheck": "bun run --filter '@groundsignal/shared' typecheck && bun run --filter '@groundsignal/api' typecheck && bun run --filter '@groundsignal/web' typecheck",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "bun-types": "^1.4.3",
+    "typescript": "^5.7.3"
+  }
+}

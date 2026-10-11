@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: groundsignal-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: MODEL_RUNNER_BASE_URL
+        value: http://127.0.0.1:11434/v1
+      - key: MODEL_NAME
+        value: smollm2:135m
+      - key: MODEL_REQUEST_TIMEOUT_MS
+        value: "180000"
+      - key: DATABASE_PATH
+        value: /app/apps/api/data/groundsignal.sqlite

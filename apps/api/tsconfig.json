@@ -1,0 +1,8 @@
+{
+  "extends": "@groundsignal/tsconfig/base.json",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "types": ["bun-types"]
+  },
+  "include": ["src/**/*"]
+}

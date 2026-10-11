@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/leaf.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GroundSignal — Local AI. Real-world impact.</title>
+    <meta
+      name="description"
+      content="Turn outdoor walk observations into constructive, actionable civic reports with on-device local AI. 100% private, no cloud, no tracking."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-warm-canvas text-charcoal font-sans antialiased selection:bg-sage selection:text-white">
+    <div id="root"></div>
+    <script>
+      const isLocalhost =
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1";
+
+      if (!isLocalhost) {
+        document.addEventListener("contextmenu", (event) => {
+          event.preventDefault();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (
+            event.key === "F12" ||
+            (event.ctrlKey &&
+              event.shiftKey &&
+              ["I", "J", "C"].includes(event.key)) ||
+            (event.ctrlKey && event.key === "U")
+          ) {
+            event.preventDefault();
+          }
+        });
+
+        setInterval(() => {
+          if (
+            window.outerWidth - window.innerWidth > 160 ||
+            window.outerHeight - window.innerHeight > 160
+          ) {
+            console.clear();
+            document.body.innerHTML = "";
+          }
+        }, 1000);
+      }
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
