@@ -1,0 +1,10 @@
+node_modules/
+.bun/
+dist/
+build/
+.cache/
+**/data/
+bun.lock
+*.sqlite
+*.db
+*.log
