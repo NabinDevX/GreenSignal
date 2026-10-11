@@ -15,8 +15,17 @@ export interface ApiError {
   details?: unknown;
 }
 
-const apiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+const configuredApiBaseUrl = (import.meta.env.VITE_API_BASE_URL || '').trim();
+const apiBaseUrl = configuredApiBaseUrl.replace(/\/$/, '');
 const apiUrl = (path: string) => `${apiBaseUrl}${path}`;
+
+function ensureProductionApiConfiguration(): void {
+  if (import.meta.env.PROD && !apiBaseUrl) {
+    throw new Error(
+      'The production API URL is not configured. Set VITE_API_BASE_URL in the Vercel project and redeploy.'
+    );
+  }
+}
 
 async function readJson<T>(res: Response): Promise<T> {
   const contentType = res.headers.get('content-type') || '';
@@ -28,6 +37,7 @@ async function readJson<T>(res: Response): Promise<T> {
 }
 
 export async function fetchHealth(): Promise<HealthResponse> {
+  ensureProductionApiConfiguration();
   const res = await fetch(apiUrl('/api/health'), {
     headers: { Accept: 'application/json' },
   });
@@ -40,6 +50,7 @@ export async function fetchHealth(): Promise<HealthResponse> {
 export async function generateReportApi(
   payload: GenerateReportRequest
 ): Promise<GenerateReportResponse> {
+  ensureProductionApiConfiguration();
   const res = await fetch(apiUrl('/api/reports/generate'), {
     method: 'POST',
     headers: {
@@ -70,6 +81,7 @@ export async function generateReportApi(
 }
 
 export async function pingModel(): Promise<ModelPingResponse> {
+  ensureProductionApiConfiguration();
   const res = await fetch(apiUrl('/api/model/ping'), {
     method: 'POST',
     headers: { Accept: 'application/json' },
@@ -78,6 +90,7 @@ export async function pingModel(): Promise<ModelPingResponse> {
 }
 
 export async function fetchModelStatus(): Promise<ModelStatusResponse> {
+  ensureProductionApiConfiguration();
   const res = await fetch(apiUrl('/api/model/status'));
   if (!res.ok) {
     throw new Error(`Failed to fetch model status: ${res.status}`);
@@ -86,6 +99,7 @@ export async function fetchModelStatus(): Promise<ModelStatusResponse> {
 }
 
 export async function fetchSavedReports(): Promise<SavedReport[]> {
+  ensureProductionApiConfiguration();
   const res = await fetch(apiUrl('/api/archive/reports'), {
     headers: { Accept: 'application/json' },
   });
@@ -97,6 +111,7 @@ export async function fetchSavedReports(): Promise<SavedReport[]> {
 }
 
 export async function saveReportApi(report: SavedReport): Promise<SavedReport> {
+  ensureProductionApiConfiguration();
   const res = await fetch(apiUrl(`/api/archive/reports/${encodeURIComponent(report.id)}`), {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -110,6 +125,7 @@ export async function saveReportApi(report: SavedReport): Promise<SavedReport> {
 }
 
 export async function deleteReportApi(id: string): Promise<void> {
+  ensureProductionApiConfiguration();
   const res = await fetch(apiUrl(`/api/archive/reports/${encodeURIComponent(id)}`), {
     method: 'DELETE',
   });
